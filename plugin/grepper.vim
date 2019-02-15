@@ -548,12 +548,13 @@ function! s:query2vimregexp(flags) abort
     let vim_query = '\V'. vim_query
   else
     " \bfoo\b -> \<foo\> Assume only one pair.
-    let vim_query = substitute(vim_query, '\v\\b(.{-})\\b', '\\<\1\\>', '')
+    let vim_query = substitute(vim_query, '\v\\b(.{-})\\b', '<\1>', '')
     " *? -> \{-}
     let vim_query = substitute(vim_query, '*\\\=?', '\\{-}', 'g')
     " +? -> \{-1,}
     let vim_query = substitute(vim_query, '\\\=+\\\=?', '\\{-1,}', 'g')
     let vim_query = escape(vim_query, '+')
+    let vim_query = '\v' . vim_query
   endif
 
   return vim_query
